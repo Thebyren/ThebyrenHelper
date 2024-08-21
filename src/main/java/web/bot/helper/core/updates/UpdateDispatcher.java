@@ -1,21 +1,27 @@
 package web.bot.helper.core.updates;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.Arrays;
 
 public class UpdateDispatcher {
 
   public static void UpdateDispatcherSelector(Update update) {
-    try{
-      if(update.hasMessage()){
-
-      } else if (update.hasCallbackQuery()) {
-
-      } else if (update.hasInlineQuery()) {
-
+    try {
+      if (update.hasMessage())
+      {
+        MessageHandler.selector(update);
       }
-    } catch (TelegramApiException e){
-      System.out.println(e);
+      else if (update.hasCallbackQuery())
+      {
+        CallbackHandler.selector(update);
+      }
+      else if (update.hasInlineQuery())
+      {
+        InlineHandler.selector(update);
+      }
+    }catch(Exception e){
+      System.out.println("error al recibir un update: "+ Arrays.toString(e.getStackTrace()));
     }
   }
 }

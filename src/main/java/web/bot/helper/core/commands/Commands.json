@@ -1,0 +1,8 @@
+{
+  "commands": {
+    "Stenography": [
+      "read_data",
+      "write_data"
+    ]
+  }
+}
