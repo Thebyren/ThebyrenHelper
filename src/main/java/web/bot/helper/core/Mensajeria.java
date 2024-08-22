@@ -1,32 +1,31 @@
 package web.bot.helper.core;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.PhotoSize;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.Arrays;
+import java.awt.*;
 
 public class Mensajeria {
-  private final AbsSender mensajero;
 
-  public Mensajeria(AbsSender mensajero) {
-    this.mensajero = mensajero;
-  }
-
-  private void ExecuteMessage(SendMessage smg){
-    try{
-    mensajero.execute(smg);
-    }catch (TelegramApiException e){
-      System.out.println("error al ejecutar orden de mensaje: "+ Arrays.toString(e.getStackTrace()));
-      System.err.println("detalles de la causa: "+e.getCause());
-    }
-  }
-
-  public static SendMessage sendText(long user, String text){
-    SendMessage smg = SendMessage.builder()
+  public static SendMessage createMsg(long user, String text){
+    return SendMessage.builder()
             .chatId(user)
             .text(text)
             .build();
-    return smg;
+  }
+
+  public static SendPhoto createMsg(long user,String text, InputFile photo){
+    return SendPhoto.builder()
+            .chatId(user)
+            .photo(photo)
+            .caption(text)
+            .build();
+  }
+  public static long getChatIdMsg(Update update){
+    return update.getMessage().getChatId();
   }
 }
