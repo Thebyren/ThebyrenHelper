@@ -1,7 +1,6 @@
 package web.bot.helper.core.commands;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import web.bot.helper.core.BotStarter;
 import web.bot.helper.core.Mensajeria;
 import web.bot.helper.tasks.Stenography;
@@ -23,12 +22,11 @@ public class CommandHandler {
   }
 
 
-  public static void selector(Update update) throws TelegramApiException {
+  public static void selector(Update update) throws Exception {
     long idMsg = Mensajeria.getChatIdMsg(update);
     CommandContext context = userContexts.get(idMsg);
+    String commandString = update.getMessage().getText();
     if (context != null) {
-      String commandString = update.getMessage().getText();
-
       // Manejo del comando /cancelar
       if (Objects.equals(commandString, "/cancelar")) {
         userContexts.remove(idMsg);
@@ -39,8 +37,6 @@ public class CommandHandler {
       }
     } else {
       // Si no hay un contexto activo, procesar el comando como de costumbre
-      String commandString = update.getMessage().getText();
-
       command command = commandMap.get(commandString);
 
       if (command != null) {
@@ -53,7 +49,9 @@ public class CommandHandler {
     }
   }
 
-  public interface CommandContext {
+  public interface CommandContext<S extends Enum<S>>{
+    void setState(S state);
+    S getState();
     void processUpdate(Update update) throws Exception;
   }
 

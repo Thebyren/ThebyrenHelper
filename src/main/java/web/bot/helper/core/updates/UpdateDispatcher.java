@@ -8,20 +8,12 @@ public class UpdateDispatcher {
 
   public static void UpdateDispatcherSelector(Update update) {
     try {
-      if (update.hasMessage())
+      if (update.hasMessage() | update.hasCallbackQuery())
       {
         MessageHandler.selector(update);
       }
-      else if (update.hasCallbackQuery())
-      {
-        CallbackHandler.selector(update);
-      }
-      else if (update.hasInlineQuery())
-      {
-        InlineHandler.selector(update);
-      }
     }catch(Exception e){
-      System.out.println("error al recibir un update: "+ Arrays.toString(e.getStackTrace()));
+      System.out.println(STR."error al recibir un update: \{Arrays.toString(e.getStackTrace())}");
     }
   }
 }

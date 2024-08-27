@@ -9,10 +9,14 @@ import java.util.Arrays;
 
 public class MessageHandler {
   public static void selector(Update update) {
-    long chatId = Mensajeria.getChatIdMsg(update);
+    long chatId=Mensajeria.getChatId(update);
     try {
       if (CommandHandler.userContexts.containsKey(chatId)) {
+        try{
         CommandHandler.userContexts.get(chatId).processUpdate(update);
+        }catch (Exception e){
+          System.out.println("error al ejecutar contexto"+ Arrays.toString(e.getStackTrace()));
+        }
       } else {
         if (update.getMessage().isCommand()) {
           CommandHandler.selector(update);
@@ -20,6 +24,8 @@ public class MessageHandler {
       }
     } catch (TelegramApiException e) {
       System.err.println("error al identificar el tipo de mensaje: " + Arrays.toString(e.getStackTrace()));
+    } catch (Exception e) {
+     throw new RuntimeException(e);
     }
   }
 }
