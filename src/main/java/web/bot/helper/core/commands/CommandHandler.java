@@ -42,6 +42,8 @@ public class CommandHandler {
       if (command != null) {
         // Ejecutar el comando
         command.execute(update);
+      } else if (Objects.equals(commandString, "/cancelar")) {
+        BotStarter.Send(Mensajeria.createMsg(idMsg, "No tienes un proceso que cancelar en este momento."));
       } else {
         // Comando no reconocido
         BotStarter.Send(Mensajeria.createMsg(idMsg, "Comando no reconocido, para más ayuda revisa /help"));
@@ -53,6 +55,7 @@ public class CommandHandler {
     void setState(S state);
     S getState();
     void processUpdate(Update update) throws Exception;
+    void cancel(Update update);
   }
 
   public interface command {

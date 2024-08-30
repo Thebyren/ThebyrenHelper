@@ -11,5 +11,6 @@ public class Main {
         TelegramBotsApi botRegister = new TelegramBotsApi(DefaultBotSession.class);
         BotStarter bot = new BotStarter();
         botRegister.registerBot(bot);
+
     }
 }

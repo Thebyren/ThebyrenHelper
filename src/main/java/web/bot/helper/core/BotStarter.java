@@ -2,8 +2,9 @@ package web.bot.helper.core;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import web.bot.helper.core.updates.UpdateDispatcher;
@@ -27,8 +28,11 @@ public class BotStarter extends TelegramLongPollingBot {
   public static void Send(SendMessage msg) throws TelegramApiException {
     getInstance().execute(msg);
   }
-  public static void Send(SendPhoto photo) throws  TelegramApiException{
+  public static void Send(SendDocument photo) throws  TelegramApiException{
     getInstance().execute(photo);
+  }
+  public static void Send(SendAnimation animation) throws  TelegramApiException{
+    getInstance().execute(animation);
   }
 
   @Override

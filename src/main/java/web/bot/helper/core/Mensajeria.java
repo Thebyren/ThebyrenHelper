@@ -1,5 +1,7 @@
 package web.bot.helper.core;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -18,12 +20,20 @@ public class Mensajeria {
             .build();
   }
 
-  public static SendPhoto createMsg(long user,String text, InputFile photo){
-    return SendPhoto.builder()
+  public static SendAnimation createMsgAnimate(long user, String text, InputFile animate){
+    return SendAnimation.builder()
             .chatId(user)
-            .photo(photo)
+            .animation(animate)
             .caption(text)
             .build();
+  }
+  public static SendDocument createMsg(long user, InputFile doc, String text){
+    return SendDocument.builder()
+            .chatId(user)
+            .document(doc)
+            .caption(text)
+            .build()
+            ;
   }
   public static SendMessage createMsgMenu(long user, String text, InlineKeyboardMarkup menu){
     return SendMessage.builder()
